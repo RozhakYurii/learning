@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Messages</title>
+</head>
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#messageForm"
+            aria-expanded="false" aria-controls="messageForm">
+        Add message
+    </button>
+    <div th:class="'collapse my-2 ' + (${textError !=null} ? ' show' : ' ')" id="messageForm">
+        <form th:method="post" th:action="@{/messages/main}" enctype="multipart/form-data">
+            <div class="input-group my-2">
+                <input th:class="'form-control' + (${textError !=null} ? ' is-invalid' : ' ')" type="text" name="text"
+                       placeholder="Your message"/>
+                <div th:if="${textError !=null}" class="invalid-feedback" th:text="${textError}">
+                </div>
+            </div>
+            <div class="input-group my-2">
+                <input class="form-control" type="text" name="tag" placeholder="Tag" th:value="${filter}">
+            </div>
+            <div class="custom-file my-2">
+                <input class="custom-file-input" type="file" name="file" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Send
+                </button>
+            </div>
+            <br>
+        </form>
+    </div>
+</div>
+<div class="container my-3">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#findByTagForm"
+            aria-expanded="false" aria-controls="findByTagForm">
+        Find by tag
+    </button>
+    <div class="collapse my-2" id="findByTagForm">
+        <form th:method="get" th:action="@{/messages/main}">
+            <input class="form-control my-2" type="text" name="filter" placeholder="Tag to search messages by"
+                   th:value="${filter}">
+            <button class="btn btn-info" type="submit">Find</button>
+        </form>
+    </div>
+</div>
+<div class="container my-3">
+    <div>Message List</div>
+    <div class="table-wrapper-scroll-y">
+        <table class="table table-striped table-bordered  table-sm">
+            <thead th:class="thead-dark">
+            <tr>
+                <th>id</th>
+                <th>text</th>
+                <th>tag</th>
+                <th>image</th>
+                <th>author</th>
+            </tr>
+            </thead>
+            <th:block th:each="message : ${messages}">
+                <tr>
+                    <td><b th:text="${message.getId()}"></b></td>
+                    <td><span th:text="${message.getText()}"> </span></td>
+                    <td><b th:text="${message.getTag()}"></b></td>
+                    <td align="center">
+                        <div th:if="${!(message.filename==null || message.filename.isEmpty())}">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-chevron-down">Image</span>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">pinned image</h5>
+                                                <h6 sec:authorize="hasAuthority('ADMIN')"
+                                                    th:text="${message.filename}"></h6>
+                                            </div>
+                                            <img th:src="'/img/'+ ${message.filename}">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <!--<td>-->
+                    <!--<div th:if="${!(message.filename==null || message.filename.isEmpty())}">-->
+                    <!--<img th:src="'/img/'+ ${message.filename}">-->
+                    <!--</div>-->
+                    <!--</td>-->
+                    <td><strong th:text="${message.getAuthor().getUsername()}"></strong></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+
+</body>
+</html>

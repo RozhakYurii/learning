@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Users</title>
+
+</head>
+<body>
+
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <br>
+    <p th:text="${message}"></p>
+    <table class="table table-striped table-bordered table-sm">
+        <thead th:class="thead-dark">
+        <tr>
+            <th> email</th>
+            <th> username</th>
+            <th> roles</th>
+            <th sec:authorize="hasAuthority('ADMIN')">password ;)</th>
+            <th>dateOfBirth</th>
+            <th sec:authorize="hasAuthority('ADMIN')"> edit link</th>
+        </tr>
+        </thead>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td><p th:text="${user.email}">...</td>
+                <td><p th:text="${user.username}">...</td>
+                <td>
+                    <th:block th:each="role : ${user.roles}">
+                        <p th:text="${role}"></p>
+                    </th:block>
+                </td>
+                <td sec:authorize="hasAuthority('ADMIN')"><p th:text="${user.password}">...</td>
+                <td><p th:text="${user.dateOfBirth}">...</td>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{'/userEdit/edit/'+ ${user.id}}">Edit</a></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+
+</body>
+</html>

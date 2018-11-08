@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Login</title>
+</head>
+
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+<div class="container">
+    <p th:text="${message}"></p>
+</div>
+</body>
+</html>

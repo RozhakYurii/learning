@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/security">
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Edit User</title>
+</head>
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <h6>Here you can edit your e-mail and password</h6>
+    <form th:action="@{/userEdit/profile}" th:method="post">
+        <label>EMAIL<input type="email" class="form-control" name="email" th:value="${user.email}"></label><br>
+        <label>PASSWORD<input type="password" class="form-control" name="password"></label><br>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+</body>
+</html>

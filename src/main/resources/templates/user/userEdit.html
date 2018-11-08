@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Edit User</title>
+</head>
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <form th:action="@{/userEdit/edit}" th:method="post">
+        <!--<label>NAME<input type="text" class="form-control" name="username" th:value="${user.username}"></label> <br>-->
+        <label>EMAIL<input type="email" class="form-control" name="email" th:value="${user.email}"></label><br>
+        <label>PASSWORD<input type="date" class="form-control" name="password" th:value="${user.password}"></label><br>
+        <label>BIRTH DATE<input type="date" class="form-control" name="dateOfBirth"
+                                th:value="${user.dateOfBirth}"></label><br>
+
+        <!--<label> <input type="checkbox" class="form-control" th:name="active" th:checked="${user.active}">IS ACTIVE</label> <br>-->
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="isActive" th:name="active" th:checked="${user.active}">
+            <label class="form-check-label" for="isActive">Is active</label>
+        </div>
+        <th:block th:each="role : ${roles}">
+            <!--<label>-->
+            <!--<span th:text="${role}"></span>-->
+            <!--<input type="checkbox" class="form-control" th:name="${role}" th:checked="${user.roles.contains(role)}">-->
+            <!--</label>-->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" th:id="${role}" th:name="${role}"
+                       th:checked="${user.roles.contains(role)}">
+                <label class="form-check-label" th:text="${role}" th:for="${role}"></label><br>
+            </div>
+
+        </th:block>
+        <input type="hidden" th:value="${user.id}" name="userId">
+        <button class="btn btn-primary" type="submit">Save</button>
+
+    </form>
+</div>
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+
+</body>
+</html>

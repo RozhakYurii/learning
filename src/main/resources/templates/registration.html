@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">Registration</title>
+</head>
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <H3>Register New User</H3>
+
+</div>
+<div class="container">
+    <form method="post" th:action="@{/registration}">
+        <div class="form-group">
+            <label for="Login">Login</label>
+            <input th:class="'form-control' + (${usernameError !=null} ? ' is-invalid' : ' ')" id="Login"
+                   aria-describedby="loginHelp" required type="text" name="username" placeholder="Login"
+                   th:value="${user !=null} ? user.getUsername()">
+            <div th:if="${usernameError !=null}" class="invalid-feedback" th:text="${usernameError}">
+            </div>
+            <div th:if="${ userExistsError!=null && !userExistsError.isEmpty()}" class="invalid-feedback"
+                 th:text="${userExistsError}">
+            </div>
+            <small id="loginHelp" class="form-text text-muted">Type your login</small>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input th:class="'form-control' + (${emailError !=null} ? ' is-invalid' : ' ')" id="email" required
+                   type="email" name="email" placeholder="email" th:value="${user !=null} ? user.getEmail()">
+            <div th:if="${emailError !=null}" class="invalid-feedback" th:text="${emailError}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input th:class="'form-control' + (${passwordError !=null} ? ' is-invalid' : ' ')" id="password" required
+                   type="password" name="password" placeholder="password">
+            <div th:if="${passwordError !=null}" class="invalid-feedback" th:text="${passwordError}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="passwordConfirmation">Password</label>
+            <input th:class="'form-control' + (${passwordConfirmationError !=null} ? ' is-invalid' : ' ')"
+                   id="passwordConfirmation" required
+                   type="password" name="passwordConfirmation" placeholder="Confirm password">
+            <div th:if="${passwordConfirmationError !=null}" class="invalid-feedback"
+                 th:text="${passwordConfirmationError}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birthDay">Birth date</label>
+            <input th:class="'form-control' + (${dateOfBirthError !=null} ? ' is-invalid' : ' ')" id="birthDay" required
+                   title="date Of Birth" type="date" name="dateOfBirth"
+                   th:value="${user !=null} ? user.getDateOfBirth()">
+            <div th:if="${dateOfBirthError !=null}" class="invalid-feedback" th:text="${dateOfBirthError}">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">register new user</button>
+    </form>
+</div>
+
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:include="fragments/fragments.html :: headFragment">
+    <title id="pageTitle">What type of users you want to see? </title>
+</head>
+<body>
+<header th:replace="fragments/fragments.html :: logoutHeader"></header>
+
+<div class="container">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#usersByBirthDate"
+            aria-expanded="false" aria-controls="usersByBirthDate">
+        Get users by date of birth
+    </button>
+    <div class="collapse form-group mt-3" id="usersByBirthDate">
+        <h3>Please provide from- and to- date</h3>
+        <form method="get" action="/user/showUsersWithDateOfBirthBetween">
+            <div class="form-group">
+                <input title="fromDate" type="date" name="fromDateParam" class="form-controll"><br>
+            </div>
+            <div class="form-group">
+                <input title="toDate" type="date" name="toDateParam" class="form-controll"><br>
+            </div>
+            <button class="btn btn-primary" type="submit">Show users</button>
+        </form>
+    </div>
+</div>
+<div class="container form-group mt-3">
+    <h3>Users with specific role</h3>
+    <form class="form-group my-2" method="get" action="/user/showUsersWithRole">
+        <div class="form-group">
+            <select class="custom-select my-3" required name="role">
+                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+            </select>
+            <button class="btn btn-primary" type="submit">Show users</button>
+        </div>
+    </form>
+</div>
+
+<footer th:replace="fragments/fragments.html :: links"></footer>
+</body>
+</html>
