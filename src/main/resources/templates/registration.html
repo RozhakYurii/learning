@@ -18,7 +18,7 @@
             <label for="Login">Login</label>
             <input th:class="'form-control' + (${usernameError !=null} ? ' is-invalid' : ' ')" id="Login"
                    aria-describedby="loginHelp" required type="text" name="username" placeholder="Login"
-                   th:value="${user !=null} ? user.getUsername()">
+                   th:value="${user!=null} ? ${user.getUsername()} : ''">
             <div th:if="${usernameError !=null}" class="invalid-feedback" th:text="${usernameError}">
             </div>
             <div th:if="${ userExistsError!=null && !userExistsError.isEmpty()}" class="invalid-feedback"
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="email">Email address</label>
             <input th:class="'form-control' + (${emailError !=null} ? ' is-invalid' : ' ')" id="email" required
-                   type="email" name="email" placeholder="email" th:value="${user !=null} ? user.getEmail()">
+                   type="email" name="email" placeholder="email" th:value="${user !=null} ? ${user.getEmail()} : ''">
             <div th:if="${emailError !=null}" class="invalid-feedback" th:text="${emailError}">
             </div>
         </div>
@@ -53,7 +53,7 @@
             <label for="birthDay">Birth date</label>
             <input th:class="'form-control' + (${dateOfBirthError !=null} ? ' is-invalid' : ' ')" id="birthDay" required
                    title="date Of Birth" type="date" name="dateOfBirth"
-                   th:value="${user !=null} ? user.getDateOfBirth()">
+                   th:value="${user !=null} ? ${user.getDateOfBirth()} : ''">
             <div th:if="${dateOfBirthError !=null}" class="invalid-feedback" th:text="${dateOfBirthError}">
             </div>
         </div>
